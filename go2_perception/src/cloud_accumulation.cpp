@@ -1,60 +1,17 @@
-#include <chrono>
-#include <functional>
-#include <limits>
-#include <memory>
-#include <string>
-#include <thread>
-#include <utility>
+#include <vector>
+#include <cstring>
 
 #include "rclcpp/rclcpp.hpp"
 #include "sensor_msgs/msg/point_cloud2.hpp"
-#include "sensor_msgs/point_cloud2_iterator.hpp"
-#include "sensor_msgs/msg/laser_scan.hpp"
 
-#include "tf2_sensor_msgs/tf2_sensor_msgs.h"
-#include "tf2_ros/create_timer_ros.h"
-#include "tf2/LinearMath/Transform.h"
-#include <tf2/LinearMath/Matrix3x3.h>
-#include "geometry_msgs/msg/transform_stamped.hpp"
-#include "geometry_msgs/msg/pose_stamped.hpp"
 
 sensor_msgs::msg::PointCloud2 accumulated_cloud;
-geometry_msgs::msg::PoseStamped rbt_pose;
 std::vector<sensor_msgs::msg::PointCloud2::ConstSharedPtr> clouds;
 
 void cloudCallback(
 sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud_msg)
 {
-    // 创建一个位姿变换
-    double quatx= rbt_pose.pose.orientation.x;
-    double quaty= rbt_pose.pose.orientation.y;
-    double quatz= rbt_pose.pose.orientation.z;
-    double quatw= rbt_pose.pose.orientation.w;
-
-    tf2::Quaternion qq(quatx, quaty, quatz, quatw);
-    tf2::Matrix3x3 m(qq);
-    double roll, pitch, yaw;
-    m.getRPY(roll, pitch, yaw);
-
-    tf2::Quaternion q;
-    q.setRPY(0.0, 165.0 * M_PI / 180.0, yaw); // 设置旋转部分
-
-    geometry_msgs::msg::TransformStamped transform_stamped;
-    transform_stamped.transform.translation.x = rbt_pose.pose.position.x;
-    transform_stamped.transform.translation.y = rbt_pose.pose.position.y;
-    transform_stamped.transform.translation.z = 0.05;
-    transform_stamped.transform.rotation.x = q.x();
-    transform_stamped.transform.rotation.y = q.y();
-    transform_stamped.transform.rotation.z = q.z();
-    transform_stamped.transform.rotation.w = q.w();
-
-    // 创建一个空的点云来存储转换后的数据
-    auto transformed_cloud = std::make_shared<sensor_msgs::msg::PointCloud2>();
-
-    // 使用 tf2::doTransform 函数来应用位姿变换
-    tf2::doTransform(*cloud_msg, *transformed_cloud, transform_stamped);
-
-    // 将新的点云添加到 clouds 中
+    // 直接将新的点云添加到 clouds 中
     clouds.push_back(cloud_msg);
 
     // 如果 clouds 中的点云数量超过了一定的限制，删除最旧的点云
@@ -107,12 +64,6 @@ sensor_msgs::msg::PointCloud2::ConstSharedPtr cloud_msg)
     accumulated_cloud.header.frame_id = "odom";
 }
 
-void poseCallback(
-  geometry_msgs::msg::PoseStamped::ConstSharedPtr pose_msg)
-{
-  rbt_pose = *pose_msg;
-}
-
 int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
@@ -124,15 +75,10 @@ int main(int argc, char * argv[])
   auto pub =
     node->create_publisher<sensor_msgs::msg::PointCloud2>("cloud", qos);
 
-  auto sub2 = node->create_subscription<geometry_msgs::msg::PoseStamped>(
-  "/utlidar/robot_pose", rclcpp::SensorDataQoS(),
-  std::bind(&poseCallback, std::placeholders::_1));
-
   auto sub = node->create_subscription<sensor_msgs::msg::PointCloud2>(
     "/utlidar/cloud_deskewed", rclcpp::SensorDataQoS(),
     std::bind(&cloudCallback, std::placeholders::_1));
 
-  sensor_msgs::msg::LaserScan laser_scan;
 
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(node);

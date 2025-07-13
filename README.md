@@ -53,11 +53,6 @@ sudo apt-get install ros-foxy-navigation2 \
                      ros-foxy-slam-toolbox
 ```
 
-#### Python Packages
-
-```bash
-pip3 install transforms3d
-```
 
 ### 3. Build the Workspace
 

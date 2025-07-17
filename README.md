@@ -1,19 +1,18 @@
 # Go2 ROS2 Toolbox
 
-
-
 [![ROS2](https://img.shields.io/badge/ROS2-Foxy-green.svg)](https://docs.ros.org/en/foxy/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Ubuntu%2020.04-orange.svg)](https://ubuntu.com/)
 
 [🇨🇳 中文版 README](./README_zh.md)
 
-A comprehensive ROS2 toolbox for Unitree Go2 EDU robot, providing SLAM and navigation capabilities for autonomous operation. If you find this project helpful, please give it a Star ⭐️ to support us!
+A comprehensive ROS2 toolbox for Unitree Go2 EDU robot, providing SLAM and navigation capabilities for autonomous operation. 
+
+If you find this project helpful, please give it a Star ⭐️ to support us!
 
 <div align="center">
   <img src="asset/demo.gif" alt="Go2 ROS2 Toolbox Demo" width="100%" style="background-color: #1a1a1a;">
 </div>
-
 
 ## 🚀 Features
 
@@ -55,7 +54,6 @@ sudo apt-get install ros-foxy-navigation2 \
                      ros-foxy-tf-transformations \
                      ros-foxy-slam-toolbox
 ```
-
 
 ### 3. Build the Workspace
 
@@ -108,11 +106,11 @@ ros2 launch go2_core go2_startup.launch.py
 
 ### ROS Topics
 
-| Component           | Topic                             | Type        | Frame     |
-| ------------------- | --------------------------------- | ----------- | --------- |
+| Component           | Topic                       | Type        | Frame     |
+| ------------------- | --------------------------- | ----------- | --------- |
 | LiDAR (Unitree)     | `/utlidar/cloud_deskewed` | PointCloud2 | `/odom` |
-| LiDAR (Accumulated) | `/trans_cloud`                  | PointCloud2 | `/odom` |
-| Camera Image        | `/camera/image_raw`             | Image       | -         |
+| LiDAR (Accumulated) | `/trans_cloud`            | PointCloud2 | `/odom` |
+| Camera Image        | `/camera/image_raw`       | Image       | -         |
 
 ## 🤝 Contributing
 

@@ -1,12 +1,13 @@
 # Go2 ROS2 Toolbox（中文说明）
 
+
 > 本文件为[英文原版 README](./README.md)的中文翻译，若有疑问请参考原文。
 
 [![ROS2](https://img.shields.io/badge/ROS2-Foxy-green.svg)](https://docs.ros.org/en/foxy/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Ubuntu%2020.04-orange.svg)](https://ubuntu.com/)
 
-本项目是为 Unitree Go2 EDU 机器人开发的 ROS2 工具箱，提供 SLAM 与导航能力，实现自主运行。
+本项目是为 Unitree Go2 EDU 机器人开发的 ROS2 工具箱，提供 SLAM 与导航能力，实现自主运行。如果觉得本项目有用，请点个 Star ⭐️ 支持一下！
 
 <div align="center">
   <img src="asset/demo.gif" alt="Go2 ROS2 Toolbox Demo" width="100%" style="background-color: #1a1a1a;">

@@ -6,7 +6,7 @@
 
 [🇨🇳 中文版 README](./README_zh.md)
 
-A comprehensive ROS2 toolbox for Unitree Go2 EDU robot, providing SLAM and navigation capabilities for autonomous operation. 
+A comprehensive ROS2 toolbox for Unitree Go2 EDU robot, providing SLAM and navigation capabilities for autonomous operation.
 
 If you find this project helpful, please give it a Star ⭐️ to support us!
 
@@ -106,11 +106,20 @@ ros2 launch go2_core go2_startup.launch.py
 
 ### ROS Topics
 
+#### Publishers
+
 | Component           | Topic                       | Type        | Frame     |
 | ------------------- | --------------------------- | ----------- | --------- |
+| Robot Pose          | `/utlidar/robot_pose`     | PoseStamped | `/odom` |
 | LiDAR (Unitree)     | `/utlidar/cloud_deskewed` | PointCloud2 | `/odom` |
 | LiDAR (Accumulated) | `/trans_cloud`            | PointCloud2 | `/odom` |
 | Camera Image        | `/camera/image_raw`       | Image       | -         |
+
+#### Subscribers
+
+| Component        | Topic        | Type  | Frame        |
+| ---------------- | ------------ | ----- | ------------ |
+| Velocity Command | `/cmd_vel`   | Twist | `/base_link` |
 
 ## 🤝 Contributing
 

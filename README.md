@@ -24,13 +24,7 @@ If you find this project helpful, please give it a Star ⭐️ to support us!
 
 ## 📋 Prerequisites
 
-> **⚠️ Note: The features of this repository have only been tested on the onboard expansion dock computer of Go2 EDU. Compatibility and functionality on other environments (like PC wired to Go2 dock computer) have not been verified.**
-
-This toolbox is developed and tested on Unitree Go2 EDU with the expansion dock environment:
-
-- **OS**: Ubuntu 20.04
-- **ROS2**: Foxy
-- **Firmware**: v1.1.7 (tested)
+> **⚠️ Note: The Humble branch is under active development. It will introduce NVIDIA Isaac Sim integration for Go2 simulation and support a wired PC setup.**
 
 ## 🛠️ Installation
 

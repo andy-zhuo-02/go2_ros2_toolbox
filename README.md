@@ -186,8 +186,9 @@ ${ISAACSIM_PYTHON_EXE} ${ISAACSIM_PATH}/standalone_examples/api/isaacsim.core.ap
 **Step 1:** Install Isaac Lab 2.1.0 
 
 
-#### Installing Isaac Lab
+### Installing Isaac Lab
 
+You can follow the [IsaacLab](https://isaac-sim.github.io/IsaacLab/main/source/setup/installation/binaries_installation.html#verifying-the-isaac-sim-installation) or just follow the turtorial below
 
 Clone the Isaac Lab repository into your project’s workspace:
 
@@ -211,4 +212,43 @@ optional arguments:
    -u, --uv [NAME]      Create the uv environment for Isaac Lab. Default name is 'env_isaaclab'.
 ```
 
-Creating the Isaac Sim Symbolic Link
+#### Creating the Isaac Sim Symbolic Link
+
+Set up a symbolic link between the installed Isaac Sim root folder and _isaac_sim in the Isaac Lab directory. This makes it convenient to index the python modules and look for extensions shipped with Isaac Sim.
+
+```bash 
+# enter the cloned repository
+cd IsaacLab
+# create a symbolic link
+ln -s ${ISAACSIM_PATH} _isaac_sim
+
+ln -s ${HOME}/isaacsim _isaac_sim
+
+```
+
+#### Creating a Conda Environment (optional)
+
+```bash
+#Default environment name 'env_isaaclab'
+./isaaclab.sh --conda
+### Activate environment
+conda activate env_isaaclab 
+```
+
+#### Installation
+
+```bash
+./isaaclab.sh --install
+```
+
+#### Verifying the Isaac Lab installation
+
+```bash
+python scripts/tutorials/00_sim/create_empty.py
+```
+![Verify IsaacLab](asset/verify_isaaclab.jpg)
+
+If you see this, congratulations!
+
+
+

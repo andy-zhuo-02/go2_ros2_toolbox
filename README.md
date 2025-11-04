@@ -250,5 +250,20 @@ python scripts/tutorials/00_sim/create_empty.py
 
 If you see this, congratulations!
 
+**Step 2:** Install Ros2 Humble
 
+please install [Ros2 Humble](https://docs.ros.org/en/humble/index.html) with the offical installation guide
 
+**Step 3:** Run Unitree Go2 Simulation
+
+```bash
+#default conda env
+conda activate env_isaaclab
+#Clone the repo to you local directory
+git clone https://github.com/Zhefan-Xu/isaac-go2-ros2.git
+
+cd isaac-go2-ros2
+
+python isaac_go2_ros2.py
+```
+Once the simulation is loaded, the robot can be teleoperated by the keyboard

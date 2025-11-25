@@ -23,30 +23,110 @@
 - **导航系统**：完整集成 Navigation2 实现自主导航
 - **原生 ROS2**：专为 ROS2 Foxy 生态构建
 
-## 🖥️ 仿真环境（Simulation）
+## 📋 前置条件
 
-我们为 Unitree Go2 EDU 提供了基于 Isaac Sim 与 Isaac Lab 的仿真环境，便于在桌面环境中进行开发与调试。
+> **⚠️ 注意：本仓库功能仅在 Go2 EDU 扩展坞自带计算机上测试通过，其他环境（如 PC 直连扩展坞）未验证。**
 
-- **操作系统**：Ubuntu 22.04  
-- **ROS2**：Humble  
-- **Isaac Sim**：4.5  
-- **Isaac Lab**：2.1.0  
-
-完整的仿真环境安装与使用说明请参考文档：  
-👉 [仿真环境说明（Simulation，中文）](./asset/simulation_zh.md)
-
-## 🤖 实机环境（Real World）
-
-实机（真实机器人）部署与使用说明已拆分到单独文档中，涵盖前置条件、安装步骤、使用方法与开发说明等内容。
-
-请参考：  
-👉 [实机环境说明（Real World，中文）](./asset/real_world_zh.md)
-
-当前项目在以下真实环境中开发与测试：
+开发与测试环境：
 
 - **操作系统**：Ubuntu 20.04
 - **ROS2**：Foxy
 - **固件**：v1.1.7（已测试）
+
+## 🛠️ 安装步骤
+
+### 1. 安装官方 Unitree ROS2 包
+
+请先安装官方 Unitree ROS2 包：
+
+```bash
+# 参考官方安装指南
+# https://github.com/unitreerobotics/unitree_ros2
+```
+
+### 2. 安装依赖
+
+#### ROS2 依赖包
+
+```bash
+sudo apt-get install ros-foxy-navigation2 \
+                     ros-foxy-nav2-bringup \
+                     ros-foxy-pcl-ros \
+                     ros-foxy-tf-transformations \
+                     ros-foxy-slam-toolbox
+```
+
+#### Python 依赖包
+
+```bash
+pip3 install transforms3d
+```
+
+### 3. 编译工作空间
+
+```bash
+# 创建工作空间
+mkdir -p go2_ros2_ws/src
+cd go2_ros2_ws/src
+
+# 克隆本仓库
+git clone https://github.com/andy-zhuo-02/go2_ros2_toolbox.git
+
+# 编译
+cd ..
+colcon build
+```
+
+## 🎯 使用方法
+
+### 快速启动
+
+```bash
+# Source 环境
+source install/setup.bash
+
+# 启动机器人
+ros2 launch go2_core go2_startup.launch.py
+```
+
+### SLAM 操作
+
+- **地图保存**：将生成的地图序列化保存
+- **地图加载**：加载之前保存的地图
+
+### 导航
+
+1. 打开 RViz2
+2. 选择"Navigation2 Goal"按钮
+3. 在地图上点击设置导航目标
+4. 拖动调整目标朝向
+
+## 🔧 开发说明
+
+### 坐标系参考
+
+| 坐标系         | 说明           | 来源                   |
+| -------------- | -------------- | ---------------------- |
+| `/odom`      | 里程计坐标系   | Unitree Go2 里程计话题 |
+| `/map`       | 地图坐标系     | SLAM Toolbox           |
+| `/base_link` | 机器人基座坐标 | Unitree Go2 里程计话题 |
+
+### ROS 话题
+
+#### 发布者
+
+| 组件             | 话题名                      | 类型        | 坐标系    |
+| ---------------- | --------------------------- | ----------- | --------- |
+| 机器人位姿       | `/utlidar/robot_pose`     | PoseStamped | `/odom` |
+| 激光雷达（原始） | `/utlidar/cloud_deskewed` | PointCloud2 | `/odom` |
+| 激光雷达（累积） | `/trans_cloud`            | PointCloud2 | `/odom` |
+| 相机图像         | `/camera/image_raw`       | Image       | -         |
+
+#### 订阅者
+
+| 组件         | 话题名      | 类型  | 坐标系        |
+| ------------ | ----------- | ----- | ------------- |
+| 速度控制命令 | `/cmd_vel`  | Twist | `/base_link` |
 
 ## 🤝 贡献
 
